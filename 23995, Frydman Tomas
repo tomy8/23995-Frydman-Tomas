@@ -1,0 +1,130 @@
+#include <iostream>
+#include <windows.h>
+#include <conio.h>
+#include <time.h>
+#include <string>
+#include <stdlib.h>
+#include <vector>
+using namespace std;
+const int n=true;
+string jugador1,jugador2,jugadormrondas,seguir="S",jganador;
+vector<unsigned int>tiro(6);
+unsigned int Game=true,turno=1,puntos=0,bperdio=false,puntosr=0,cant1,cant2,cant3,cant4,cant5,cant6,cantrondas=0,nlanzamiento=0,tpar1=0,tpar2=0,tpar3=0,mrondas=0,bmrondas=true,bempate=false;
+int mododejuego;
+
+void pantinicio(){system("cls");
+cout<<"Bienvenido al juego de 10 mil!";_getch();cout<<endl<<endl;
+cout<<"Elija un modo de juego"<<endl<<endl<<"1) Un jugador"<<endl<<"2) Dos jugadores"<<endl<<"3) Puntaje mas alto"<<endl<<endl;
+cin>>mododejuego;}
+
+void textoganador(){
+cout<<endl<<endl<<jganador<<" ha llegado a 10000 en "<<cantrondas<<" rondas.";_getch();}
+
+void puntaje(){
+vector<unsigned int>cant(6);
+for(int x=0;x<6;x++){cant[x]=0;}
+for(int x=0;x<6;x++){
+        switch(tiro[x]){
+        case 1:cant[0]++;break;
+        case 2:cant[1]++;break;
+        case 3:cant[2]++;break;
+        case 4:cant[3]++;break;
+        case 5:cant[4]++;break;
+        case 6:cant[5]++;break;}}
+    for(int x=0;x<6;x++){
+        if(cant[x]==3){if(x==0){puntos+=1000;}else{puntos+=(x+1)*100;}cout<<endl<<"Has lanzado un trio de "<<x+1;break;}
+        else if(cant[x]==4||cant[x]==5){if(x==0){puntos+=2000;}else{puntos+=(x+1)*200;}cout<<endl<<"Has lanzado un trio++ de "<<x+1;break;}
+        else if(cant[0]==1&&cant[1]==1&&cant[2]==1&&cant[3]==1&&cant[4]==1&&cant[5]==1){puntos+=1500;cout<<endl<<"Has lanzado una escalera larga ";break;}
+        else if(cant[0]==6){cout<<"Has lanzado un sexteto";cout<<endl<<"  ¡Has ganado!"<<endl;Game=false;break;}}
+    if(puntos==0){if(cant[0]<=2&&cant[0]>0){puntos+=cant[0]*100;}
+    if(cant[4]<=2&&cant[4]>0){puntos+=cant[4]*50;}}
+    for(int x=0;x<6;x++){
+        if(cant[x]==2){tpar1=true;cant[x]=0;}
+        if(cant[x]==2){tpar2=true;cant[x]=0;}
+        if(cant[x]==2){tpar3=true;cant[x]=0;}}
+    if(tpar1==true&&tpar2==true&&tpar3==true){puntos+=1500;cout<<endl<<"Has lanzado un triple par ";}tpar1=false;tpar2=false;tpar3=false;
+    cout<<" ";}
+
+int main(){
+while(n==true){
+unsigned int ptot1=0,ptot2=0;
+srand(time(0));system("color d7");
+pantinicio();
+Game=true;
+switch (mododejuego){
+/*-------------------------------------------------------------------------------------------------------------------------------------*/
+case 1:
+    system("cls");
+    cout<<"Ingrese el nombre del participante:"<<endl<<endl;cin>>jugador1;
+    while(Game==true){cantrondas++;
+    do {system("cls");nlanzamiento++;cout<<"Turno de "<<jugador1<<" | Ronda No"<<cantrondas<<" | Puntaje Total: "<<ptot1<<" puntos"<<endl<<"------------------------------------------------------------------------------------------------------------------------"
+    <<endl<<"Puntaje de la  ronda: "<<puntosr<<endl<<"Lanzamiento No "<<nlanzamiento<<endl<<"------------------------------------------------------------------------------------------------------------------------"<<endl;_getch();
+    cout<<jugador1<<" tiro ";for(int x=0;x<6;x++){tiro[x]=1+rand()%6;}
+    for(int x=0;x<6;x++){cout<<tiro[x]<<" ";}cout<<endl;
+    puntaje();
+    if(puntos==0){cout<<endl<<endl<<jugador1<<" no suma puntos."<<endl;_getch();seguir="N";}
+    else{cout<<endl<<"+ "<<puntos<<" puntos"<<endl;}
+    puntosr+=puntos;
+    if(ptot1+puntosr==10000){cout<<endl<<"Has ganado!";_getch();ptot1=10000;Game=false;jganador=jugador1;textoganador();break;}
+    else if(ptot1+puntosr>10000){cout<<endl<<"Te has pasado";_getch();puntosr=0;seguir="N";}
+    if(seguir=="N"||seguir=="n"){bperdio=true;}
+    if(seguir=="S"||seguir=="s"){do{cout<<endl<<"Continuar lanzando?";_sleep(1000);cout<<" Ingrese (S/N)"<<endl<<endl;
+    cin>>seguir;}while(seguir!="S"&&seguir!="s"&&seguir!="N"&&seguir!="n");}
+    if(bperdio==true){}else if(seguir=="N"||seguir=="n"){ptot1+=puntosr;}
+    cant1=0;cant2=0;cant3=0;cant4=0;cant5=0;cant6=0;puntos=0;}while(seguir!="N"&&seguir!="n");
+    nlanzamiento=0;puntosr=0;seguir="S";bperdio=false;}
+    if(bmrondas==true){mrondas=cantrondas;jugadormrondas=jugador1;bmrondas=false;}
+    else if(cantrondas<mrondas){mrondas=cantrondas;jugadormrondas=jugador1;}
+    break;
+/*-------------------------------------------------------------------------------------------------------------------------------------*/
+case 2:
+    system("cls");
+    cout<<"Ingrese los nombres de los participantes:"<<endl<<endl;cin>>jugador1;cout<<endl<<endl;cin>>jugador2;
+    while(Game==true){cantrondas++;
+    do{
+    do{system("cls");nlanzamiento++;cout<<"Turno de "<<jugador1<<" | Ronda No"<<cantrondas<<" | Puntaje Total: "<<ptot1<<" puntos"<<endl<<"------------------------------------------------------------------------------------------------------------------------"
+    <<endl<<"Puntaje de la  ronda: "<<puntosr<<endl<<"Lanzamiento No "<<nlanzamiento<<endl<<"------------------------------------------------------------------------------------------------------------------------"<<endl;_getch();
+    cout<<jugador1<<" tiro ";for(int x=0;x<6;x++){tiro[x]=1+rand()%6;}
+    for(int x=0;x<6;x++){cout<<tiro[x]<<" ";}cout<<endl;
+    puntaje();
+    if(puntos==0){cout<<endl<<endl<<jugador1<<" no suma puntos."<<endl;_getch();seguir="N";turno=2;}
+    else{cout<<endl<<"+ "<<puntos<<" puntos"<<endl;}
+    puntosr+=puntos;
+    if(ptot1+puntosr==10000){cout<<endl<<jugador1<<" ha llegado a 10 mil!";_getch();ptot1=10000;seguir="n";bempate=true;break;}
+    else if(ptot1+puntosr>10000){cout<<endl<<"Te has pasado";_getch();puntosr=0;seguir="N";turno=2;}
+    if(seguir=="N"||seguir=="n"){bperdio=true;}
+    if(seguir=="S"||seguir=="s"){do{cout<<endl<<"Continuar lanzando?";_sleep(1000);cout<<" Ingrese (S/N)"<<endl<<endl;
+    cin>>seguir;}while(seguir!="S"&&seguir!="s"&&seguir!="N"&&seguir!="n");}
+    if(bperdio==true){}else if(seguir=="N"||seguir=="n"){ptot1+=puntosr;}
+    cant1=0;cant2=0;cant3=0;cant4=0;cant5=0;cant6=0;puntos=0;} while(seguir!="N"&&seguir!="n");
+    nlanzamiento=0;puntosr=0;turno=2;bperdio=false;}while (turno==1);seguir="S";
+/*-------------------------------------------------------------------------------------------------------------------------------------*/
+    do{
+    do{system("cls");nlanzamiento++;cout<<"Turno de "<<jugador2<<" | Ronda No"<<cantrondas<<" | Puntaje Total: "<<ptot2<<" puntos"<<endl<<"------------------------------------------------------------------------------------------------------------------------"
+    <<endl<<"Puntaje de la  ronda: "<<puntosr<<endl<<"Lanzamiento No "<<nlanzamiento<<endl<<"------------------------------------------------------------------------------------------------------------------------"<<endl;_getch();
+    cout<<jugador2<<" tiro ";for(int x=0;x<6;x++){tiro[x]=1+rand()%6;}
+    for(int x=0;x<6;x++){cout<<tiro[x]<<" ";}cout<<endl;
+    puntaje();
+    if(puntos==0){cout<<endl<<endl<<jugador2<<" no suma puntos."<<endl;_getch();seguir="N";turno=1;}
+    else{cout<<endl<<"+ "<<puntos<<" puntos"<<endl;}
+    puntosr+=puntos;
+    if(ptot2+puntosr==10000){cout<<endl<<jugador2<<" ha llegado a 10 mil!";_getch();ptot2=10000;seguir="n";
+    if(bempate==true){cout<<endl<<endl<<jugador1<<" y "<<jugador2<<" han empatado!";}Game=false;break;}
+    else if(ptot2+puntosr>10000){cout<<endl<<"Te has pasado";_getch();puntosr=0;seguir="N";turno=1;}
+    if(seguir=="N"||seguir=="n"){bperdio=true;}
+    if(seguir=="S"||seguir=="s"){do{cout<<endl<<"Continuar lanzando?";_sleep(1000);cout<<" Ingrese (S/N)"<<endl<<endl;
+    cin>>seguir;}while(seguir!="S"&&seguir!="s"&&seguir!="N"&&seguir!="n");}
+    if(bperdio==true){}else if(seguir=="N"||seguir=="n"){ptot2+=puntosr;}
+    cant1=0;cant2=0;cant3=0;cant4=0;cant5=0;cant6=0;puntos=0;}while(seguir!="N"&&seguir!="n");
+    nlanzamiento=0;puntosr=0;turno=1;bperdio=false;}while (turno==2);seguir="S";
+    if(bempate==true&&ptot2!=10000){system("cls");cout<<endl<<jugador1<<" ha ganado!!"<<endl<<endl;Game=false;jganador=jugador1;textoganador();break;}
+    else if(ptot2==10000){system("cls");cout<<endl<<jugador2<<" ha ganado!!"<<endl<<endl;Game=false;jganador=jugador2;textoganador();break;}}
+    if(bmrondas==true){mrondas=cantrondas;if(ptot1==10000){jugadormrondas=jugador1;}else if(ptot2==10000){jugadormrondas=jugador2;}bmrondas=false;}
+    else if(cantrondas<mrondas){mrondas=cantrondas;if(ptot1==10000){jugadormrondas=jugador1;}else if(ptot2==10000){jugadormrondas=jugador2;}}
+    break;
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+case 3:
+    if(mrondas==0){cout<<endl<<"Aun no se han jugado partidas en esta sesion."<<endl<<endl;_getch();break;}
+    else{system("cls");cout<<endl<<"La menor cantidad de rondas en que se ha gando una partida en esta sesion fue lograda por "<<jugadormrondas<<endl<<"en tan solo "<<mrondas<<" rondas.";}
+_getch();
+}}}
