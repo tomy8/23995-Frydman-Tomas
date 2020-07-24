@@ -53,7 +53,7 @@ for(int x=0;x<6;x++){
         if(tpar1==false){if(cant[x]==2){tpar1=true;cant[x]=0;}}
         if(tpar2==false){if(cant[x]==2){tpar2=true;cant[x]=0;}}
         if(tpar3==false){if(cant[x]==2){tpar3=true;cant[x]=0;}}}
-    if(tpar1==true&&tpar2==true&&tpar3==true){puntos+=1500;cout<<endl<<"Has lanzado un triple par ";}
+    if(tpar1==true&&tpar2==true&&tpar3==true){puntos=1500;cout<<endl<<"Has lanzado un triple par ";}
     cout<<" ";}
 
 int main(void){
